@@ -51,11 +51,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.util.ReflectionUtils;
 
+import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
+import fr.paris.lutece.portal.service.admin.AdminAuthenticationService;
 import fr.paris.lutece.portal.service.i18n.I18nService;
+import fr.paris.lutece.portal.service.security.LuteceUser;
+import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.service.util.AppTraceService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.utils.MVCMessage;
 import fr.paris.lutece.portal.util.mvc.utils.MVCUtils;
@@ -74,6 +80,7 @@ public abstract class MVCAdminJspBean extends PluginAdminPageJspBean
     private static final String MARK_ERRORS = "errors";
     private static final String MARK_INFOS = "infos";
     private static final String MARK_WARNINGS = "warnings";
+    private static final String PROPERTY_SITE_CODE = "lutece.code";
     private static Logger _logger = MVCUtils.getLogger( );
     private List<ErrorMessage> _listErrors = new ArrayList<>( );
     private List<ErrorMessage> _listInfos = new ArrayList<>( );
@@ -559,5 +566,26 @@ public abstract class MVCAdminJspBean extends PluginAdminPageJspBean
         {
             AppLogService.error( e.getStackTrace( ), e );
         }
+    }
+    
+    /**
+     * trace events 
+     * 
+     * @param request
+     * @param strEventType
+     * @param strAppEventCode
+     * @param data
+     */
+    protected void traceEvent( HttpServletRequest request , String strEventType, String strAppEventCode, Object data )
+    {
+    	String strUserName = "-";
+    	
+    	// get authenticated user if authentication is enable
+    	AdminUser adminLuteceUser = AdminAuthenticationService.getInstance( ).getRegisteredUser( request );
+    	String strAdminUserName = adminLuteceUser.getAccessCode( );
+         
+        String strAppCode = AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" );
+        
+        AppTraceService.trace( strAppCode, strEventType, strAppEventCode, "BO:" + strAdminUserName, data );
     }
 }

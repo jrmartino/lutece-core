@@ -90,6 +90,7 @@ import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.service.util.AppTraceService;
 import fr.paris.lutece.portal.service.workgroup.AdminWorkgroupService;
 import fr.paris.lutece.portal.service.xsl.XslExportService;
 import fr.paris.lutece.portal.web.admin.AdminFeaturesPageJspBean;
@@ -194,7 +195,8 @@ public class AdminUserJspBean extends AdminFeaturesPageJspBean
     private static final String MESSAGE_ERROR_CSV_FILE_IMPORT = "portal.users.import_users_from_file.error_csv_file_import";
     private static final String FIELD_IMPORT_USERS_FILE = "portal.users.import_users_from_file.labelImportFile";
     private static final String FIELD_XSL_EXPORT = "portal.users.export_users.labelXslt";
-
+    private static final String PROPERTY_SITE_CODE = "lutece.code" ;
+    
     // Parameters
     private static final String PARAMETER_ACCESS_CODE = "access_code";
     private static final String PARAMETER_LAST_NAME = "last_name";
@@ -351,7 +353,12 @@ public class AdminUserJspBean extends AdminFeaturesPageJspBean
     private static final String CONSTANT_ATTACHEMENT_FILE_NAME = "attachement; filename=\"";
     private static final String CONSTANT_ATTACHEMENT_DISPOSITION = "Content-Disposition";
     private static final String CONSTANT_XML_USERS = "users";
-
+    private static final String CONSTANT_MODIFY_ADMINUSER = "lutece.admin.modifyAdminUser";
+    private static final String CONSTANT_MODIFY_ADMINUSER_GROUPS = "lutece.admin.modifyAdminUserGroups";
+    private static final String CONSTANT_MODIFY_ADMINUSER_PASSWORD = "lutece.admin.modifyAdminUserPassword";
+    private static final String CONSTANT_MODIFY_ADMINUSER_ROLES = "lutece.admin.modifyAdminUserRoles";
+    private static final String CONSTANT_MODIFY_ADMINUSER_RIGHTS = "lutece.admin.modifyAdminUserRights";
+    
     private static final String TOKEN_TECHNICAL_ADMIN = AdminDashboardJspBean.TEMPLATE_MANAGE_DASHBOARDS;
     private static final String JSP_MANAGE_ADVANCED_PARAMETERS = "../AdminTechnicalMenu.jsp?#users_advanced_parameters";
 
@@ -961,6 +968,8 @@ public class AdminUserJspBean extends AdminFeaturesPageJspBean
             AdminUserHome.update( user, PasswordUpdateMode.IGNORE );
 
             AdminUserFieldService.doModifyUserFields( user, request, getLocale( ), getUser( ) );
+            
+            AppTraceService.trace( AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" ), AppTraceService.EVENT_TYPE_RIGHTS, CONSTANT_MODIFY_ADMINUSER, "BO:" + currentUser.getAccessCode( ), user );
         }
         else
         {
@@ -990,7 +999,12 @@ public class AdminUserJspBean extends AdminFeaturesPageJspBean
             AdminUserHome.update( user );
 
             AdminUserFieldService.doModifyUserFields( user, request, getLocale( ), getUser( ) );
+            
+            AppTraceService.trace( AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" ), AppTraceService.EVENT_TYPE_RIGHTS, CONSTANT_MODIFY_ADMINUSER, "BO:" + currentUser.getAccessCode( ), user );
+            
         }
+        
+        
 
         return JSP_MANAGE_USER;
     }
@@ -1122,6 +1136,8 @@ public class AdminUserJspBean extends AdminFeaturesPageJspBean
             user.setPasswordMaxValidDate( AdminUserService.getPasswordMaxValidDate( ) );
 
             AdminUserHome.update( user, PasswordUpdateMode.UPDATE );
+            
+            AppTraceService.trace( AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" ), AppTraceService.EVENT_TYPE_RIGHTS, CONSTANT_MODIFY_ADMINUSER_PASSWORD, "BO:" + currentUser.getAccessCode( ), user.getAccessCode() );
 
         }
 
@@ -1697,6 +1713,11 @@ public class AdminUserJspBean extends AdminFeaturesPageJspBean
                 AdminUserHome.createRightForUser( nUserId, strRight );
             }
         }
+        
+        HashMap<String,String[]> mapData = new HashMap<>( );
+        mapData.put( user.getAccessCode( ), arrayRights ); 
+        AppTraceService.trace( AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" ), AppTraceService.EVENT_TYPE_RIGHTS, CONSTANT_MODIFY_ADMINUSER_RIGHTS, "BO:" + userCurrent.getAccessCode( ), mapData );
+        
 
         if ( user.getUserId( ) == userCurrent.getUserId( ) )
         {
@@ -1854,6 +1875,10 @@ public class AdminUserJspBean extends AdminFeaturesPageJspBean
                 AdminUserHome.createRoleForUser( nUserId, strRole );
             }
         }
+        
+        HashMap<String,String[]> mapData = new HashMap<>( );
+        mapData.put( selectedUser.getAccessCode( ), arrayRoles ); 
+        AppTraceService.trace( AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" ), AppTraceService.EVENT_TYPE_RIGHTS, CONSTANT_MODIFY_ADMINUSER_ROLES, "BO:" + userCurrent.getAccessCode( ), mapData );
 
         return JSP_MANAGE_USER_ROLES + "?" + PARAMETER_USER_ID + "=" + nUserId;
     }
@@ -1896,6 +1921,11 @@ public class AdminUserJspBean extends AdminFeaturesPageJspBean
                 AdminWorkgroupHome.addUserForWorkgroup( user, strWorkgroupKey );
             }
         }
+        
+        HashMap<String,String[]> mapData = new HashMap<>( );
+        mapData.put( user.getAccessCode( ), arrayWorkspaces ); 
+        AppTraceService.trace( AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" ), AppTraceService.EVENT_TYPE_RIGHTS, CONSTANT_MODIFY_ADMINUSER_GROUPS, "BO:" + currentUser.getAccessCode( ), mapData );
+
 
         return JSP_MANAGE_USER_WORKGROUPS + "?" + PARAMETER_USER_ID + "=" + nUserId;
     }

@@ -37,6 +37,7 @@ import fr.paris.lutece.portal.service.datastore.DatastoreService;
 import fr.paris.lutece.portal.service.init.LuteceInitException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.service.util.AppTraceService;
 import fr.paris.lutece.util.url.UrlItem;
 
 import java.security.Principal;
@@ -60,12 +61,19 @@ public final class SecurityService
      * Session attribute that stores the LuteceUser object attached to the session
      */
     private static final String ATTRIBUTE_LUTECE_USER = "lutece_user";
+    
     private static final String PROPERTY_AUTHENTICATION_CLASS = "mylutece.authentication.class";
     private static final String PROPERTY_AUTHENTICATION_ENABLE = "mylutece.authentication.enable";
     private static final String PROPERTY_PORTAL_AUTHENTICATION_REQUIRED = "mylutece.portal.authentication.required";
+    private static final String PROPERTY_SITE_CODE = "lutece.code";
+    
     private static final String URL_INTERROGATIVE = "?";
     private static final String URL_AMPERSAND = "&";
     private static final String URL_EQUAL = "=";
+    
+    private static final String CONSTANT_LOGIN_USER = "lutece.loginUser";
+    private static final String CONSTANT_LOGOUT_USER = "lutece.logoutUser";
+    
     private static SecurityService _singleton = new SecurityService( );
     private static LuteceAuthentication _authenticationService;
     private static boolean _bEnable;
@@ -240,6 +248,8 @@ public final class SecurityService
             throws LoginException, LoginRedirectException
     {
         LuteceUser user = _authenticationService.login( strUserName, strPassword, request );
+        
+        AppTraceService.trace( AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" ), AppTraceService.EVENT_TYPE_CONNECT, CONSTANT_LOGIN_USER, "FO:" + strUserName, null );
         _authenticationService.updateDateLastLogin( user, request );
 
         if ( _authenticationService.findResetPassword( request, strUserName ) )
@@ -272,6 +282,9 @@ public final class SecurityService
 
         _authenticationService.logout( user );
         unregisterUser( request );
+        
+        AppTraceService.trace( AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" ), AppTraceService.EVENT_TYPE_CONNECT, CONSTANT_LOGOUT_USER, "FO:" + user.getName( ), null );
+        
     }
 
     /**

@@ -56,11 +56,14 @@ import org.springframework.util.ReflectionUtils;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
 import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.security.LuteceUser;
+import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.service.util.AppTraceService;
 import fr.paris.lutece.portal.util.mvc.utils.MVCMessage;
 import fr.paris.lutece.portal.util.mvc.utils.MVCMessageBox;
 import fr.paris.lutece.portal.util.mvc.utils.MVCUtils;
@@ -90,6 +93,8 @@ public abstract class MVCApplication implements XPageApplication
     private static final String VIEW_MESSAGEBOX = "messageBox";
     private static final String CONTENT_TYPE_JSON = "application/json";
     private static final String CONTENT_TYPE_XML = "application/xml";
+    private static final String PROPERTY_SITE_CODE = "lutece.code";
+    
     private static Logger _logger = MVCUtils.getLogger( );
     private List<ErrorMessage> _listErrors = new ArrayList<>( );
     private List<ErrorMessage> _listInfos = new ArrayList<>( );
@@ -868,5 +873,32 @@ public abstract class MVCApplication implements XPageApplication
         model.put( MARK_MESSAGE_BOX, _messageBox );
 
         return getXPage( _messageBox.getTemplate( ), getLocale( request ), model );
+    }
+    
+    /**
+     * trace events 
+     * 
+     * @param request
+     * @param strEventType
+     * @param strAppEventCode
+     * @param data
+     */
+    protected void traceEvent( HttpServletRequest request , String strEventType, String strAppEventCode, Object data )
+    {
+    	String strUserName = "-";
+    	
+    	// get authenticated user if authentication is enable
+        if ( SecurityService.isAuthenticationEnable( ) ) 
+        {
+        	LuteceUser luteceUser = SecurityService.getInstance( ).getRegisteredUser( request );
+        	if ( luteceUser != null )
+        	{
+        		strUserName =  luteceUser.getName( );
+        	}
+        }
+        
+        String strAppCode = AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" );
+        
+        AppTraceService.trace( strAppCode, strEventType, strAppEventCode, "FO:" + strUserName, data );
     }
 }

@@ -128,6 +128,7 @@ log4j.rootLogger=ERROR, Error
 log4j.logger.lutece=DEBUG, Console
 log4j.logger.lutece.event=INFO, Application, Console
 log4j.additivity.lutece.event=false
+log4j.logger.lutece-trace=INFO, EventTracer
 log4j.logger.lutece.error=ERROR, Error, Console
 log4j.additivity.lutece.error=false
 log4j.logger.lutece.debug=ERROR, Console
@@ -173,6 +174,15 @@ log4j.appender.Application.layout=org.apache.log4j.PatternLayout
 log4j.appender.Application.layout.ConversionPattern=%d{dd/MM/yy HH:mm:ss} %-5p [%t] %c{2} - %m%n
 log4j.appender.Application.MaxFileSize=1000KB
 log4j.appender.Application.MaxBackupIndex=5
+
+# File "traceEvent.log"
+log4j.appender.EventTracer=org.apache.log4j.RollingFileAppender
+log4j.appender.EventTracer.File=${webapp_home}/WEB-INF/logs/traceEvent.log
+log4j.appender.EventTracer.Append=true
+log4j.appender.EventTracer.layout=org.apache.log4j.PatternLayout
+log4j.appender.EventTracer.layout.ConversionPattern=%d{dd/MM/yy HH:mm:ss} %-5p [%t] %c{2} - %m%n
+log4j.appender.EventTracer.MaxFileSize=1000KB
+log4j.appender.EventTracer.MaxBackupIndex=5
 
 # File "pool.log"
 log4j.appender.Pool=org.apache.log4j.RollingFileAppender

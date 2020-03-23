@@ -49,6 +49,8 @@ import fr.paris.lutece.portal.business.user.authentication.LuteceDefaultAdminAut
 import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.service.util.AppTraceService;
 import fr.paris.lutece.util.url.UrlItem;
 
 /**
@@ -61,7 +63,14 @@ public final class AdminAuthenticationService
      */
     private static final String ATTRIBUTE_ADMIN_USER = "lutece_admin_user";
     private static final String ATTRIBUTE_ADMIN_LOGIN_NEXT_URL = "luteceAdminLoginNextUrl";
+    
     private static final String BEAN_ADMIN_AUTHENTICATION_MODULE = "adminAuthenticationModule";
+    
+    private static final String PROPERTY_SITE_CODE = "lutece.code";
+    
+    private static final String CONSTANT_LOGIN_ADMINUSER = "lutece.loginAdminUser";
+    private static final String CONSTANT_LOGOUT_ADMINUSER = "lutece.logoutAdminUser";
+    
     private static AdminAuthenticationService _singleton = new AdminAuthenticationService( );
     private static AdminAuthentication _authentication;
     private static boolean _bUseDefaultModule;
@@ -184,6 +193,8 @@ public final class AdminAuthenticationService
     {
         AdminUser user = _authentication.login( strAccessCode, strPassword, request );
 
+        AppTraceService.trace( AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" ), AppTraceService.EVENT_TYPE_CONNECT, CONSTANT_LOGIN_ADMINUSER, "BO:" + strAccessCode, null );
+        
         try
         {
             registerUser( request, user );
@@ -217,6 +228,9 @@ public final class AdminAuthenticationService
 
         _authentication.logout( user );
         unregisterUser( request );
+        
+        AppTraceService.trace( AppPropertiesService.getProperty( PROPERTY_SITE_CODE, "?" ), AppTraceService.EVENT_TYPE_CONNECT, CONSTANT_LOGOUT_ADMINUSER, "BO:" + user.getAccessCode( ), null );
+        
     }
 
     /**
