@@ -2,9 +2,7 @@
  # This macro template can be used to output white-space-sensitive formats (like RSS files).
  # See http://dev.lutece.paris.fr/jira/browse/LUTECE-765
 -->
-<#include "util/calendar/macro_datepicker.html" ignore_missing=true />
 <#-- Do not remove this comment -->
-
 <#macro comboSiteWithParams name default_value additionalParameters items >
 	<select id="${name}" name="${name}" ${additionalParameters} >
 		<#list items as item>
@@ -385,4 +383,14 @@
 			<#if i18nHelpBlockKey != ''><span class="help-block">#i18n{${i18nHelpBlockKey}}</span></#if>
 		</div>
 	</div>
+</#macro>
+
+<#-- fieldSet  -->
+<#macro fieldSet legend='' class='' legendClass='' >
+<fieldset <#if class!=''> class="${class}"</#if>>
+	<#if legend!=''>
+		<legend <#if legendClass!=''> class="${legendClass}"</#if>>${legend}</legend>
+	</#if>
+	<#nested>
+</fieldset>
 </#macro>
