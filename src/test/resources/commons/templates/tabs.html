@@ -1,7 +1,18 @@
 <#include "utils.html">
 <@header title='Tabs' />
 
-<@h2></@h2>
+<p>Tabs are rendered using several macros:</p>
+<ul>
+	<li>macro <strong>tabs</strong>: the global container</li>
+	<li>macro <strong>tabList</strong>: the container of the tabs list</li>
+	<li>macro <strong>tabLink</strong>: a link to each tab</li>
+	<li>macro <strong>tabContent</strong>: the container of the panels</li>
+	<li>macro <strong>tabPanel</strong>: the panel associated to each tab</li>
+</ul>
+
+<@h2>Tabs inside a box</@h2>
+
+<@h3>Tabs bar</@h3>
 
 <@row>
 	<@columns>
@@ -12,13 +23,20 @@
 					<@tabList>
 						<@tabLink href='#tab0' active=true title='Tab 0' />
 						<@tabLink href='#tab1' title='Tab 1' />
+						<@tabLink href='#tab2' title='Tab 2' />
 					</@tabList>
 					<@tabContent>
 						<@tabPanel id='tab0' active=true>
-							Tab 0 contents
+							<p>Vivamus sit amet consectetur erat, vitae ullamcorper urna. Vestibulum semper at lorem ac pellentesque.</p>
+							<p>Nulla eget mi sagittis, posuere magna in, tempor lectus.</p>
 						</@tabPanel>
 						<@tabPanel id='tab1' active=false>
-							Tab 1 contents
+							<p>Nam a lectus dignissim, lobortis urna in, suscipit purus. In a leo ac velit aliquam interdum eu et magna.</p>
+							<p>Pellentesque interdum vehicula nisl, sed varius arcu viverra eu. Aenean luctus id eros vitae sagittis.</p> 
+						</@tabPanel>
+						<@tabPanel id='tab2' active=false>
+							<p>Duis a semper eros, et rutrum felis. Suspendisse a tincidunt nisl.</p>
+							<p>Vivamus viverra nibh ac semper sodales. Phasellus tortor est, condimentum pulvinar sem eget, facilisis accumsan eros.</p>
 						</@tabPanel>
 					</@tabContent>
 				</@tabs>
@@ -27,7 +45,294 @@
 	</@columns>
 </@row>
 
+<pre>
+&lt;@row&gt;
+	&lt;@columns&gt;
+		&lt;@box&gt;
+			&lt;@boxHeader title='Box with tabs' /&gt;
+			&lt;@boxBody&gt;
+				&lt;@tabs&gt;
+					&lt;@tabList&gt;
+						&lt;@tabLink href='#tab0' active=true title='Tab 0' /&gt;
+						&lt;@tabLink href='#tab1' title='Tab 1' /&gt;
+						&lt;@tabLink href='#tab2' title='Tab 2' /&gt;
+					&lt;/@tabList&gt;
+					&lt;@tabContent&gt;
+						&lt;@tabPanel id='tab0' active=true&gt;
+							&lt;p&gt;Vivamus sit amet consectetur erat, vitae 
+							ullamcorper urna. Vestibulum semper at lorem ac 
+							pellentesque.&lt;/p&gt;
+							&lt;p&gt;Nulla eget mi sagittis, posuere magna 
+							in, tempor lectus.&lt;/p&gt;
+						&lt;/@tabPanel&gt;
+						&lt;@tabPanel id='tab1' active=false&gt;
+							&lt;p&gt;Nam a lectus dignissim, lobortis urna 
+							in, suscipit purus. In a leo ac velit aliquam 
+							interdum eu et magna.&lt;/p&gt;
+							&lt;p&gt;Pellentesque interdum vehicula nisl, sed 
+							varius arcu viverra eu. Aenean luctus id eros 
+							vitae sagittis.&lt;/p&gt; 
+						&lt;/@tabPanel&gt;
+						&lt;@tabPanel id='tab2' active=false&gt;
+							&lt;p&gt;Duis a semper eros, et rutrum felis. 
+							Suspendisse a tincidunt nisl.&lt;/p&gt;
+							&lt;p&gt;Vivamus viverra nibh ac semper sodales. 
+							Phasellus tortor est, condimentum pulvinar sem 
+							eget, facilisis accumsan eros.&lt;/p&gt;
+						&lt;/@tabPanel&gt;
+					&lt;/@tabContent&gt;
+				&lt;/@tabs&gt;
+			&lt;/@boxBody&gt;
+		&lt;/@box&gt;
+	&lt;/@columns&gt;
+&lt;/@row&gt;
+</pre>
+
+
+<@h3>Tabs pills</@h3>
+
+<@h4>Horizontal tabs</@h4>
+
+<@row>
+	<@columns>
+		<@box>
+			<@boxHeader title='Box with horizontal tabs' />
+			<@boxBody>
+				<@tabs style='pills'>
+					<@tabList>
+						<@tabLink href='#tab3' active=true title='Tab 0' />
+						<@tabLink href='#tab4' title='Tab 1' />
+						<@tabLink href='#tab5' title='Tab 2' />
+					</@tabList>
+					<@tabContent>
+						<@tabPanel id='tab3' active=true>
+							<p>Vivamus sit amet consectetur erat, vitae ullamcorper urna. Vestibulum semper at lorem ac pellentesque.</p>
+							<p>Nulla eget mi sagittis, posuere magna in, tempor lectus.</p>
+						</@tabPanel>
+						<@tabPanel id='tab4' active=false>
+							<p>Nam a lectus dignissim, lobortis urna in, suscipit purus. In a leo ac velit aliquam interdum eu et magna.</p>
+							<p>Pellentesque interdum vehicula nisl, sed varius arcu viverra eu. Aenean luctus id eros vitae sagittis.</p> 
+						</@tabPanel>
+						<@tabPanel id='tab5' active=false>
+							<p>Duis a semper eros, et rutrum felis. Suspendisse a tincidunt nisl.</p>
+							<p>Vivamus viverra nibh ac semper sodales. Phasellus tortor est, condimentum pulvinar sem eget, facilisis accumsan eros.</p>
+						</@tabPanel>
+					</@tabContent>
+				</@tabs>
+			</@boxBody>
+		</@box>
+	</@columns>
+</@row>
+
+<pre>
+&lt;@row&gt;
+	&lt;@columns&gt;
+		&lt;@box&gt;
+			&lt;@boxHeader title='Box with horizontal tabs' /&gt;
+			&lt;@boxBody&gt;
+				&lt;@tabs style='pills'&gt;
+					&lt;@tabList&gt;
+						&lt;@tabLink href='#tab3' active=true title='Tab 0' /&gt;
+						&lt;@tabLink href='#tab4' title='Tab 1' /&gt;
+						&lt;@tabLink href='#tab5' title='Tab 2' /&gt;
+					&lt;/@tabList&gt;
+					&lt;@tabContent&gt;
+						&lt;@tabPanel id='tab3' active=true&gt;
+							&lt;p&gt;Vivamus sit amet consectetur 
+							erat, vitae ullamcorper urna. Vestibulum 
+							semper at lorem ac pellentesque.&lt;/p&gt;
+							&lt;p&gt;Nulla eget mi sagittis, posuere 
+							magna in, tempor lectus.&lt;/p&gt;
+						&lt;/@tabPanel&gt;
+						&lt;@tabPanel id='tab4' active=false&gt;
+							&lt;p&gt;Nam a lectus dignissim, lobortis 
+							urna in, suscipit purus. In a leo ac 
+							velit aliquam interdum eu et magna.&lt;/p&gt;
+							&lt;p&gt;Pellentesque interdum vehicula 
+							nisl, sed varius arcu viverra eu. Aenean 
+							luctus id eros vitae sagittis.&lt;/p&gt; 
+						&lt;/@tabPanel&gt;
+						&lt;@tabPanel id='tab5' active=false&gt;
+							&lt;p&gt;Duis a semper eros, et rutrum 
+							felis. Suspendisse a tincidunt nisl.&lt;/p&gt;
+							&lt;p&gt;Vivamus viverra nibh ac semper 
+							sodales. Phasellus tortor est, 
+							condimentum pulvinar sem eget, facilisis 
+							accumsan eros.&lt;/p&gt;
+						&lt;/@tabPanel&gt;
+					&lt;/@tabContent&gt;
+				&lt;/@tabs&gt;
+			&lt;/@boxBody&gt;
+		&lt;/@box&gt;
+	&lt;/@columns&gt;
+&lt;/@row&gt;
+</pre>
+
+<@h4>Vertical tabs</@h4>
+
+<@row>
+	<@columns>
+		<@box>
+			<@boxHeader title='Box with vertical tabs' />
+			<@boxBody>
+				<@tabs style='pills'>
+					<@row>
+						<@columns sm=2>
+							<@tabList vertical=true>
+								<@tabLink href='#tab6' active=true title='Tab 0' />
+								<@tabLink href='#tab7' title='Tab 1' />
+								<@tabLink href='#tab8' title='Tab 2' />
+							</@tabList>
+						</@columns>
+						<@columns sm=10>
+							<@tabContent>
+								<@tabPanel id='tab6' active=true>
+									<p>Vivamus sit amet consectetur erat, vitae ullamcorper urna. Vestibulum semper at lorem ac pellentesque.</p>
+									<p>Nulla eget mi sagittis, posuere magna in, tempor lectus.</p>
+								</@tabPanel>
+								<@tabPanel id='tab7' active=false>
+									<p>Nam a lectus dignissim, lobortis urna in, suscipit purus. In a leo ac velit aliquam interdum eu et magna.</p>
+									<p>Pellentesque interdum vehicula nisl, sed varius arcu viverra eu. Aenean luctus id eros vitae sagittis.</p>
+								</@tabPanel>
+								<@tabPanel id='tab8' active=false>
+									<p>Duis a semper eros, et rutrum felis. Suspendisse a tincidunt nisl.</p>
+									<p>Vivamus viverra nibh ac semper sodales. Phasellus tortor est, condimentum pulvinar sem eget, facilisis accumsan eros.</p>
+								</@tabPanel>
+							</@tabContent>
+						</@columns>
+					</@row>
+				</@tabs>
+			</@boxBody>
+		</@box>
+	</@columns>
+</@row>
+
+<pre>
+&lt;@row&gt;
+	&lt;@columns&gt;
+		&lt;@box&gt;
+			&lt;@boxHeader title='Box with vertical tabs' /&gt;
+			&lt;@boxBody&gt;
+				&lt;@tabs style='pills'&gt;
+					&lt;@row&gt;
+						&lt;@columns sm=2&gt;
+							&lt;@tabList vertical=true&gt;
+								&lt;@tabLink href='#tab6' active=true title='Tab 0' /&gt;
+								&lt;@tabLink href='#tab7' title='Tab 1' /&gt;
+								&lt;@tabLink href='#tab8' title='Tab 2' /&gt;
+							&lt;/@tabList&gt;
+						&lt;/@columns&gt;
+						&lt;@columns sm=10&gt;
+							&lt;@tabContent&gt;
+								&lt;@tabPanel id='tab6' active=true&gt;
+									&lt;p&gt;Vivamus sit amet 
+									consectetur erat, vitae 
+									ullamcorper urna. Vestibulum 
+									semper at lorem ac pellentesque.&lt;/p&gt;
+									&lt;p&gt;Nulla eget mi sagittis, 
+									posuere magna in, tempor lectus.&lt;/p&gt;
+								&lt;/@tabPanel&gt;
+								&lt;@tabPanel id='tab7' active=false&gt;
+									&lt;p&gt;Nam a lectus dignissim, 
+									lobortis urna in, suscipit 
+									purus. 
+									In a leo ac velit aliquam 
+									interdum eu et magna.&lt;/p&gt;
+									&lt;p&gt;Pellentesque interdum 
+									vehicula nisl, sed varius arcu 
+									viverra eu. Aenean luctus id eros 
+									vitae sagittis.&lt;/p&gt; 
+								&lt;/@tabPanel&gt;
+								&lt;@tabPanel id='tab8' active=false&gt;
+									&lt;p&gt;Duis a semper eros, et 
+									rutrum felis. Suspendisse a 
+									tincidunt nisl.&lt;/p&gt;
+									&lt;p&gt;Vivamus viverra nibh ac 
+									semper sodales. Phasellus tortor 
+									est, condimentum pulvinar sem 
+									eget, facilisis accumsan eros.&lt;/p&gt;
+								&lt;/@tabPanel&gt;
+							&lt;/@tabContent&gt;
+						&lt;/@columns&gt;
+					&lt;/@row&gt;
+				&lt;/@tabs&gt;
+			&lt;/@boxBody&gt;
+		&lt;/@box&gt;
+	&lt;/@columns&gt;
+&lt;/@row&gt;
+</pre>
+
+<@h2>Tabs container (without box)</@h2>
+
+<p>Tabs can also be used by themselves as a page or section container.</p>
+<p>In this example, we're using icons on tab links.</p>
+
+<@row>
+	<@columns>
+		<@tabs>
+			<@tabList>
+				<@tabLink href='#tab9' active=true title='Tab 0' tabIcon='archway' />
+				<@tabLink href='#tab10' title='Tab 1' tabIcon='balance-scale' />
+				<@tabLink href='#tab11' title='Tab 2' tabIcon='book' />
+			</@tabList>
+			<@tabContent>
+				<@tabPanel id='tab9' active=true>
+					<p>Vivamus sit amet consectetur erat, vitae ullamcorper urna. Vestibulum semper at lorem ac pellentesque.</p>
+					<p>Nulla eget mi sagittis, posuere magna in, tempor lectus.</p>
+				</@tabPanel>
+				<@tabPanel id='tab10'>
+					<p>Nam a lectus dignissim, lobortis urna in, suscipit purus. In a leo ac velit aliquam interdum eu et magna.</p>
+					<p>Pellentesque interdum vehicula nisl, sed varius arcu viverra eu. Aenean luctus id eros vitae sagittis.</p>
+				</@tabPanel>
+				<@tabPanel id='tab11'>
+					<p>Duis a semper eros, et rutrum felis. Suspendisse a tincidunt nisl.</p>
+					<p>Vivamus viverra nibh ac semper sodales. Phasellus tortor est, condimentum pulvinar sem eget, facilisis accumsan eros.</p>
+				</@tabPanel>
+			</@tabContent>
+		</@tabs>
+	</@columns>
+</@row>
+
+<pre>
+&lt;@row&gt;
+	&lt;@columns&gt;
+		&lt;@tabs&gt;
+			&lt;@tabList&gt;
+				&lt;@tabLink href='#tab9' active=true title='Tab 0' tabIcon='archway' /&gt;
+				&lt;@tabLink href='#tab10' title='Tab 1' tabIcon='balance-scale' /&gt;
+				&lt;@tabLink href='#tab11' title='Tab 2' tabIcon='book' /&gt;
+			&lt;/@tabList&gt;
+			&lt;@tabContent&gt;
+				&lt;@tabPanel id='tab9' active=true&gt;
+					&lt;p&gt;Vivamus sit amet consectetur erat, vitae
+					ullamcorper urna. Vestibulum semper at lorem ac
+					pellentesque.&lt;/p&gt;
+					&lt;p&gt;Nulla eget mi sagittis, posuere magna in, tempor
+					lectus.&lt;/p&gt;
+				&lt;/@tabPanel&gt;
+				&lt;@tabPanel id='tab10'&gt;
+					&lt;p&gt;Nam a lectus dignissim, lobortis urna in, 
+					suscipit purus. In a leo ac velit aliquam interdum eu et
+					magna.&lt;/p&gt;
+					&lt;p&gt;Pellentesque interdum vehicula nisl, sed varius
+					arcu viverra eu. Aenean luctus id eros vitae sagittis.&lt;/p&gt;
+				&lt;/@tabPanel&gt;
+				&lt;@tabPanel id='tab11'&gt;
+					&lt;p&gt;Duis a semper eros, et rutrum felis. Suspendisse
+					a tincidunt nisl.&lt;/p&gt;
+					&lt;p&gt;Vivamus viverra nibh ac semper sodales. 
+					Phasellus tortor est, condimentum pulvinar sem eget, 
+					facilisis accumsan eros.&lt;/p&gt;
+				&lt;/@tabPanel&gt;
+			&lt;/@tabContent&gt;
+		&lt;/@tabs&gt;
+	&lt;/@columns&gt;
+&lt;/@row&gt;
+</pre>
+
 <@h2># Parameters documentation</@h2>
+
+<@h3>Tabs</@h3>
 
 <@table>
 <@tr>
@@ -36,49 +341,34 @@
     <@th>Default</@th>
 </@tr>
 <@tr>
-    <@th>id</@th>
+    <@th>color</@th>
     <@td>string</@td>
-    <@td>none</@td>
+    <@td>-</@td>
 </@tr>
 <@tr>
     <@th>class</@th>
     <@td>string</@td>
-    <@td>none</@td>
+    <@td>-</@td>
 </@tr>
 <@tr>
-    <@th>responsive</@th>
-    <@td>boolean</@td>
-    <@td>true</@td>
+    <@th>id</@th>
+    <@td>string</@td>
+    <@td>-</@td>
 </@tr>
 <@tr>
-    <@th>condensed</@th>
-    <@td>boolean</@td>
-    <@td>true</@td>
+    <@th>hide</@th>
+    <@td>sequence</@td>
+    <@td>-</@td>
 </@tr>
 <@tr>
-    <@th>hover</@th>
-    <@td>boolean</@td>
-    <@td>true</@td>
-</@tr>
-<@tr>
-    <@th>striped</@th>
-    <@td>boolean</@td>
-    <@td>false</@td>
-</@tr>
-<@tr>
-    <@th>bordered</@th>
-    <@td>boolean</@td>
-    <@td>false</@td>
-</@tr>
-<@tr>
-    <@th>narrow</@th>
+    <@th>collapsed</@th>
     <@td>boolean</@td>
     <@td>false</@td>
 </@tr>
 <@tr>
     <@th>params</@th>
     <@td>string</@td>
-    <@td>none</@td>
+    <@td>-</@td>
 </@tr>
 </@table>
 <@footer />

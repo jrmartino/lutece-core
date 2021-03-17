@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,6 @@
  *
  * License 1.0
  */
-
 package fr.paris.lutece.portal.business.template;
 
 import java.util.List;
@@ -45,6 +44,7 @@ public class CommonsInclude
     private String _strKey;
     private String _strName;
     private String _strDescription;
+    private boolean _bDefault = false;
     private List<String> _listFiles;
 
     /**
@@ -129,5 +129,25 @@ public class CommonsInclude
     public void setFiles( List<String> listFiles )
     {
         _listFiles = listFiles;
+    }
+
+    /**
+     * is default
+     * 
+     * @return true if default
+     */
+    public boolean isDefault( )
+    {
+        return _bDefault;
+    }
+
+    /**
+     * set default
+     * 
+     * @param _bDefault
+     */
+    public void setDefault( boolean _bDefault )
+    {
+        this._bDefault = _bDefault;
     }
 }

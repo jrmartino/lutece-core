@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -861,7 +861,7 @@ public class RoleManagementJspBean extends AdminFeaturesPageJspBean
         {
             final ReferenceItem itemUser = new ReferenceItem( );
             itemUser.setCode( Integer.toString( user.getUserId( ) ) );
-            itemUser.setName( user.getAccessCode( ) + "(" + user.getFirstName( ) + " " + user.getLastName( ) + ")" );
+            itemUser.setName( user.getLastName( ) + " " + user.getFirstName( ) + " (" + user.getAccessCode( )  + ")" );
 
             boolean bAssigned = listAssignedUsers.stream( )
                     .anyMatch( assignedUser -> Integer.toString( assignedUser.getUserId( ) ).equals( itemUser.getCode( ) ) );
